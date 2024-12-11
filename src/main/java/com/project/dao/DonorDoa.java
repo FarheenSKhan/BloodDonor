@@ -3,6 +3,9 @@ package com.project.dao;
 import com.project.entity.Donor;
 import com.project.repository.DonorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -39,13 +42,19 @@ public class DonorDoa {
         return optional.orElse(null);
     }
 
-    public List<Donor> findAll(){
-        return donorRepository.findAll();
+    public Page<Donor> findAll(int page,int pageSize,String field){
+        return donorRepository.findAll(PageRequest.of(page,pageSize).withSort(Sort.by(field)));
     }
 
-    public List<Donor> findByBloodGroup(String bloodGroup){
-        return donorRepository.findByBloodGroup(bloodGroup);
+    public Page<Donor> findByBloodGroup(int page, int pageSize, String field, String bloodGroup){
+        return donorRepository.findByBloodGroup(PageRequest.of(page,pageSize).withSort(Sort.by(field)),bloodGroup);
+    }
+    public List<Donor> findByCityAndState(String city, String state){
+        return donorRepository.findByCityAndState(city,state);
     }
 
+    public List<Donor> findBYCityAndStateAndAge(String city,String state,int age){
+        return donorRepository.findByCityAndStateAndAge(city, state, age);
+    }
 
 }

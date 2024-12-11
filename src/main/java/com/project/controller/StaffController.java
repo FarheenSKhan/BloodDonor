@@ -5,6 +5,7 @@ import com.project.entity.ResponseStructure;
 import com.project.entity.Staff;
 import com.project.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +29,10 @@ public class StaffController {
     }
 
     @GetMapping("/findAll")
-    public ResponseEntity<ResponseStructure<List<Staff>>> findAll() {
-        return staffService.findAll();
+    public ResponseEntity<ResponseStructure<Page<Staff>>> findAll(@RequestParam int page,
+                                                                   @RequestParam int pageSize,
+                                                                   @RequestParam String field) {
+        return staffService.findAll(page, pageSize, field) ;
     }
 
     @GetMapping("/findAllDepartment")

@@ -18,6 +18,7 @@ public class DonorRequest {
     private String mobile;
     private String address;
     private String password;
+    private String state;
     private String city;
     private int age;
     private String profilPic;
@@ -117,5 +118,12 @@ public class DonorRequest {
 
     public void setAadharNo(long aadharNo) {
         this.aadharNo = aadharNo;
+    }
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }

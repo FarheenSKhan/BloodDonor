@@ -6,6 +6,7 @@ import com.project.entity.ResponseStructure;
 import com.project.entity.Staff;
 import com.project.utill.Aes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -45,8 +46,9 @@ public class StaffService {
             staff.setProfilPic(request.getProfilPic());
             staff.setAddress(request.getAddress());
             staff.setCity(request.getCity());
+            staff.setState(request.getState());
             staff.setRole("ROLE_STAFF");
-            staff.setName(request.getFirstName() + " " + request.getLastName());
+            staff.setName((request.getFirstName() + " " + request.getLastName()).toUpperCase());
             staff = staffDao.saveStaff(staff);
 
             responseStructure.setStatus(HttpStatus.CREATED.value());
@@ -74,9 +76,9 @@ public class StaffService {
         }
     }
 
-    public ResponseEntity<ResponseStructure<List<Staff>>> findAll(){
-        ResponseStructure<List<Staff>> responseStructure=new ResponseStructure<>();
-        List<Staff> staffList=staffDao.findAll();
+    public ResponseEntity<ResponseStructure<Page<Staff>>> findAll(int page,int pageSize,String field){
+        ResponseStructure<Page<Staff>> responseStructure=new ResponseStructure<>();
+        Page<Staff> staffList=staffDao.findAll(page,pageSize,field);
         responseStructure.setStatus(HttpStatus.OK.value());
         responseStructure.setMessage("Staffs found successfully");
         responseStructure.setData(staffList);

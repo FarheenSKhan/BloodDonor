@@ -6,7 +6,9 @@ import com.project.dto.request.StaffRequest;
 import com.project.entity.Admin;
 import com.project.entity.ResponseStructure;
 import com.project.utill.Aes;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -43,10 +45,11 @@ public class AdminService {
             admin.setPassword(Aes.encrypt(request.getPassword()));
             admin.setAddress(request.getAddress());
             admin.setCity(request.getCity());
+            admin.setState(request.getState());
             admin.setProfilPic(request.getProfilPic());
             admin.setAadharNo(request.getAadharNo());
             admin.setRole("ROLE_ADMIN");
-            admin.setName(request.getFirstName()+" "+request.getLastName());
+            admin.setName((request.getFirstName()+" "+request.getLastName()).toUpperCase());
             admin=adminDao.saveAdmin(admin);
 
             responseStructure.setStatus(HttpStatus.OK.CREATED.value());
@@ -56,9 +59,9 @@ public class AdminService {
         }
     }
 
-    public ResponseEntity<ResponseStructure<List<Admin>>> findAll(){
-        ResponseStructure<List<Admin>> responseStructure=new ResponseStructure<>();
-        List<Admin> admin = adminDao.findAll();
+    public ResponseEntity<ResponseStructure<Page<Admin>>> findAll(int page, int pageSize, String field){
+        ResponseStructure<Page<Admin>> responseStructure=new ResponseStructure<>();
+        Page<Admin> admin = adminDao.findAll(page, pageSize, field);
         responseStructure.setStatus(HttpStatus.OK.value());
         responseStructure.setMessage("Admins found successfully");
         responseStructure.setData(admin);

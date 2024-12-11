@@ -24,20 +24,9 @@ public class User {
 
     @Column(unique = true,nullable = false)
     private String mobile;
-
     private String address;
     private String password;
-
     private String state;
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
     private String city;
     private int age;
     private String profilPic;
@@ -139,5 +128,12 @@ public class User {
 
     public void setOtp(Long otp) {
         this.otp = otp;
+    }
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }

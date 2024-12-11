@@ -3,6 +3,9 @@ package com.project.dao;
 import com.project.entity.Staff;
 import com.project.repository.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,8 +34,8 @@ public class StaffDao {
         return optional.orElse(null);
     }
 
-    public List<Staff> findAll() {
-        return staffRepository.findAll();
+    public Page<Staff> findAll(int page,int pageSize,String field) {
+        return staffRepository.findAll(PageRequest.of(page,pageSize).withSort(Sort.by(field)));
     }
 
     public List<Staff> findByDepartment(String department) {

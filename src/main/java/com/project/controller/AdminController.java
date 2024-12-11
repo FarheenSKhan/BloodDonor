@@ -7,6 +7,7 @@ import com.project.entity.ResponseStructure;
 import com.project.entity.Staff;
 import com.project.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +25,10 @@ public class AdminController {
         return adminService.saveAdmin(request);
     }
     @GetMapping("/findAll")
-    public ResponseEntity<ResponseStructure<List<Admin>>> findAll(){
-        return adminService.findAll();
+    public ResponseEntity<ResponseStructure<Page<Admin>>> findAll(@RequestParam int page,
+                                                                  @RequestParam int pageSize,
+                                                                  @RequestParam String field){
+        return adminService.findAll(page,pageSize,field);
     }
     @GetMapping("/findById")
     public ResponseEntity<ResponseStructure<Admin>> findById(@RequestParam Long id){
