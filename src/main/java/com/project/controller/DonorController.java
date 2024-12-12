@@ -2,6 +2,7 @@ package com.project.controller;
 
 
 import com.project.dto.request.DonorRequest;
+import com.project.dto.request.response.GetAllDonorResponse;
 import com.project.entity.Donor;
 import com.project.entity.ResponseStructure;
 import com.project.entity.User;
@@ -30,7 +31,7 @@ public class DonorController {
     }
 
     @GetMapping("/findAll")
-    public ResponseEntity<ResponseStructure<List<Donor>>> findAll(){
+    public ResponseEntity<ResponseStructure<List<GetAllDonorResponse>>> findAll(){
         return donorService.findAll();
     }
 

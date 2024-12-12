@@ -3,6 +3,7 @@ package com.project.service;
 import com.project.dao.DonorDoa;
 import com.project.dao.UserDao;
 import com.project.dto.request.DonorRequest;
+import com.project.dto.request.response.GetAllDonorResponse;
 import com.project.entity.Donor;
 import com.project.entity.ResponseStructure;
 import com.project.entity.User;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -79,12 +81,31 @@ public class DonorService {
         }
     }
 
-    public ResponseEntity<ResponseStructure<List<Donor>>> findAll(){
-        ResponseStructure<List<Donor>> responseStructure = new ResponseStructure<>();
+    public ResponseEntity<ResponseStructure<List<GetAllDonorResponse>>> findAll(){
+        ResponseStructure<List<GetAllDonorResponse>> responseStructure = new ResponseStructure<>();
         List<Donor> donors = donorDoa.findAll();
+
+        List<GetAllDonorResponse> responses = new ArrayList<>();
+        for (Donor donor : donors) {
+            GetAllDonorResponse response = new GetAllDonorResponse();
+            response.setFirstName(donor.getFirstName());
+            response.setLastName(donor.getLastName());
+            response.setEmail(donor.getEmail());
+            response.setMobile(donor.getMobile());
+            response.setBloodGroup(donor.getBloodGroup());
+            response.setCity(donor.getCity());
+            response.setAge(donor.getAge());
+            response.setProfilPic(donor.getProfilPic());
+            response.setRole(donor.getRole());
+            response.setAadharNo(donor.getAadharNo());
+            response.setAddress(donor.getAddress());
+            response.setActiveDonor(donor.isActiveDonor());
+            response.setPassword(donor.getPassword());
+            responses.add(response);
+        }
         responseStructure.setStatus(HttpStatus.OK.value());
         responseStructure.setMessage("Donors found successfully");
-        responseStructure.setData(donors);
+        responseStructure.setData(responses);
         return new ResponseEntity<>(responseStructure, HttpStatus.OK);
     }
 
