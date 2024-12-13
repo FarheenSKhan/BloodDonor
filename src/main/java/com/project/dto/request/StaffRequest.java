@@ -16,6 +16,7 @@ public class StaffRequest {
     private String mobile;
     private String address;
     private String city;
+    private String state;
     private String department;
     private String profilPic;
     private  String password;
@@ -99,5 +100,13 @@ public class StaffRequest {
 
     public void setProfilPic(String profilPic) {
         this.profilPic = profilPic;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }

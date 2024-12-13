@@ -9,6 +9,7 @@ import com.project.entity.ResponseStructure;
 import com.project.entity.User;
 import com.project.utill.Aes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -52,6 +53,7 @@ public class DonorService {
             donor.setActiveDonor(request.isActiveDonor());
             donor.setAadharNo(request.getAadharNo());
             donor.setCity(request.getCity());
+            donor.setState(request.getState());
             donor.setProfilPic(request.getProfilPic());
             donor.setRole("ROLE_DONOR");
             donor.setName((request.getFirstName()+" "+request.getLastName()).toUpperCase());
@@ -81,6 +83,7 @@ public class DonorService {
         }
     }
 
+
     public ResponseEntity<ResponseStructure<List<GetAllDonorResponse>>> findAll(){
         ResponseStructure<List<GetAllDonorResponse>> responseStructure = new ResponseStructure<>();
         List<Donor> donors = donorDoa.findAll();
@@ -109,11 +112,11 @@ public class DonorService {
         return new ResponseEntity<>(responseStructure, HttpStatus.OK);
     }
 
-    public  ResponseEntity<ResponseStructure<List<Donor>>> findByBloodGroup(String bloodGroup){
-        ResponseStructure<List<Donor>> responseStructure = new ResponseStructure<>();
-        List<Donor> donors = donorDoa.findByBloodGroup(bloodGroup);
+    public  ResponseEntity<ResponseStructure<Page<Donor>>> findByBloodGroup(int page, int pageSize, String field, String bloodGroup){
+        ResponseStructure<Page<Donor>> responseStructure = new ResponseStructure<>();
+        Page<Donor> donors = donorDoa.findByBloodGroup(page,pageSize,field,bloodGroup);
         responseStructure.setStatus(HttpStatus.OK.value());
-        responseStructure.setMessage("Donors found successfully");
+        responseStructure.setMessage("Donors found successfully ");
         responseStructure.setData(donors);
         return new ResponseEntity<>(responseStructure, HttpStatus.OK);
     }
@@ -177,6 +180,36 @@ public class DonorService {
         responseStructure.setMessage("Donor saved successfully");
         responseStructure.setData(donor);
         return new ResponseEntity<>(responseStructure, HttpStatus.OK);
+    }
+    public ResponseEntity<ResponseStructure<List<Donor>>> findByCityAndSatate(String city, String state){
+        ResponseStructure<List<Donor>> responseStructure=new ResponseStructure<>();
+        List<Donor> donor=donorDoa.findByCityAndState(city, state);
+        if(Objects.isNull(donor)){
+            responseStructure.setStatus(HttpStatus.NOT_FOUND.value());
+            responseStructure.setMessage("Donors not found");
+            responseStructure.setData(null);
+            return new ResponseEntity<>(responseStructure, HttpStatus.NOT_FOUND);
+        }else{
+            responseStructure.setStatus(HttpStatus.OK.value());
+            responseStructure.setMessage("Donors found successfully");
+            responseStructure.setData(donor);
+            return new ResponseEntity<>(responseStructure, HttpStatus.OK);
+        }
+    }
 
+    public ResponseEntity<ResponseStructure<List<Donor>>> findByCityAndStateAndAge(String city, String state,int age){
+        ResponseStructure<List<Donor>> responseStructure =new ResponseStructure<>();
+        List<Donor> donor = donorDoa.findBYCityAndStateAndAge(city, state, age);
+        if(Objects.isNull(donor)){
+            responseStructure.setStatus(HttpStatus.NOT_FOUND.value());
+            responseStructure.setMessage("Donors not found");
+            responseStructure.setData(null);
+            return new ResponseEntity<>(responseStructure, HttpStatus.NOT_FOUND);
+        }else{
+            responseStructure.setStatus(HttpStatus.OK.value());
+            responseStructure.setMessage("Donors found successfully");
+            responseStructure.setData(donor);
+            return new ResponseEntity<>(responseStructure, HttpStatus.OK);
+        }
     }
 }

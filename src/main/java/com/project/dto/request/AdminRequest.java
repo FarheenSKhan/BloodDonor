@@ -11,6 +11,7 @@ public class AdminRequest {
     private String mobile;
     private String address;
     private String city;
+    private String state;
     private String profilPic;
     private  String password;
     private long aadharNo;
@@ -85,5 +86,12 @@ public class AdminRequest {
 
     public void setAadharNo(long aadharNo) {
         this.aadharNo = aadharNo;
+    }
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }
