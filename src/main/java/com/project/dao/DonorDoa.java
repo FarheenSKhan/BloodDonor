@@ -42,9 +42,9 @@ public class DonorDoa {
         return optional.orElse(null);
     }
 
-    public Page<Donor> findAll(int page,int pageSize,String field){
-        return donorRepository.findAll(PageRequest.of(page,pageSize).withSort(Sort.by(field)));
-    }
+   public List<Donor> findAll(){
+        return donorRepository.findAll();
+   }
 
     public Page<Donor> findByBloodGroup(int page, int pageSize, String field, String bloodGroup){
         return donorRepository.findByBloodGroup(PageRequest.of(page,pageSize).withSort(Sort.by(field)),bloodGroup);

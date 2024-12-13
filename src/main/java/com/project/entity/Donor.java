@@ -15,7 +15,6 @@ public class Donor extends User {
 
 
     private String firstName;
-
     private String lastName;
     private String bloodGroup;
     private boolean activeDonor;

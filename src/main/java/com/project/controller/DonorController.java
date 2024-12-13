@@ -2,6 +2,7 @@ package com.project.controller;
 
 
 import com.project.dto.request.DonorRequest;
+import com.project.dto.request.response.GetAllDonorResponse;
 import com.project.entity.Donor;
 import com.project.entity.ResponseStructure;
 import com.project.entity.User;
@@ -31,10 +32,8 @@ public class DonorController {
     }
 
     @GetMapping("/findAll")
-    public ResponseEntity<ResponseStructure<Page<Donor>>> findAll(@RequestParam int page,
-                                                                  @RequestParam int pageSize,
-                                                                  @RequestParam String field){
-        return donorService.findAll(page, pageSize, field);
+    public ResponseEntity<ResponseStructure<List<GetAllDonorResponse>>> findAll(){
+        return donorService.findAll();
     }
 
     @GetMapping("/findByBloodGroup")

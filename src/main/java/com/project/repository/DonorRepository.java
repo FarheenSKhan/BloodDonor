@@ -13,9 +13,11 @@ public interface DonorRepository extends JpaRepository<Donor, Long> {
     public Donor findByEmail(String email);
     public Donor findByMobile(String mobile);
     public Page<Donor> findByBloodGroup(Pageable pageable,String bloodGroup);
-    public Page<Donor> findAll(Pageable pageable);
+   public List<Donor> findAll();
 
     public List<Donor> findByCityAndState(String city, String state);
     public List<Donor> findByCityAndStateAndAge(String city, String state, int age);
+
+    public List<Donor> findByBloodGroup(String bloodGroup);
 
 }
